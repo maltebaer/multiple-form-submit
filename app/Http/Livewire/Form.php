@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -12,21 +13,16 @@ class Form extends Component implements HasForms
 {
     use InteractsWithForms;
 
+    public $name;
+
     protected function getFormSchema(): array
     {
         return [
             Wizard::make([
-                Wizard\Step::make('Order')
-                    ->schema([
-                        // ...
-                    ]),
-                Wizard\Step::make('Delivery')
-                    ->schema([
-                        // ...
-                    ]),
                 Wizard\Step::make('Billing')
                     ->schema([
-                        // ...
+                        TextInput::make('name')
+                            ->required()
                     ]),
             ])
                 ->skippable()
@@ -41,7 +37,7 @@ class Form extends Component implements HasForms
 
     public function submit()
     {
-        logs()->info('submit');
+        logs()->info($this->form->getState());
 
         sleep(3);
 
